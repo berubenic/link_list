@@ -65,11 +65,32 @@ class LinkedList
 
   def contains?(value)
     current = @head
-    until current.next_node.nil?
+    until current.nil?
       return true if current.value == value
 
       current = current.next_node
     end
+    false
+  end
+
+  def find(value)
+    current = @head
+    index = 0
+    until current.nil?
+      return index if current.value == value
+
+      current = current.next_node
+      index += 1
+    end
+  end
+
+  def to_s
+    current = @head
+    until current.nil?
+      print "(#{current.value}) -> "
+      current = current.next_node
+    end
+    print "nil \n"
   end
 end
 
@@ -92,8 +113,6 @@ p list.append(20)
 p list.prepend(5)
 p list.prepend(16)
 
-p list
-
 p list.size
 p list.head
 p list.tail
@@ -102,4 +121,6 @@ p list.at(3)
 
 p list.size
 
-p list.contains?(16)
+list.to_s
+p list.contains?(22)
+p list.find(12)
