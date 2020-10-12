@@ -51,6 +51,26 @@ class LinkedList
     end
     current
   end
+
+  def pop
+    current = @head
+    previous = nil
+    until current.next_node.nil?
+      previous = current
+      current = current.next_node
+    end
+    @tails = previous
+    @tails.next_node = nil
+  end
+
+  def contains?(value)
+    current = @head
+    until current.next_node.nil?
+      return true if current.value == value
+
+      current = current.next_node
+    end
+  end
 end
 
 class Node
@@ -79,3 +99,7 @@ p list.head
 p list.tail
 
 p list.at(3)
+
+p list.size
+
+p list.contains?(16)
