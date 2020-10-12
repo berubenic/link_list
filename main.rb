@@ -11,16 +11,23 @@ class LinkedList
     # create a new node
     this_node = Node.new(value)
     if @head.nil?
+      @head = @tail = this_node
+    else
+      @tail.next_node = this_node
+      @tail = this_node
+    end
+  end
+
+  def prepend(value)
+    # create a new node
+    this_node = Node.new(value)
+    if @head.nil?
       @head = this_node
       return
     end
 
     current = @head
-    # until current.nil means until we reach the last node
-    current = current.next_node until current.next_node.nil?
-
-    # point current(last node) to our new node
-    current.next_node = this_node
+    this_node.next_node = current
   end
 end
 
