@@ -2,6 +2,7 @@
 
 class LinkedList
   # setup head ,remmember we traverse a linkedlist from the head
+  attr_reader :head, :tail
   def initialize
     @head = nil
     @tail = nil
@@ -38,6 +39,18 @@ class LinkedList
     end
     count
   end
+
+  def at(index)
+    return @head if index.zero?
+
+    return unless index.positive?
+
+    current = @head
+    index.times do
+      current = current.next_node
+    end
+    current
+  end
 end
 
 class Node
@@ -62,3 +75,7 @@ p list.prepend(16)
 p list
 
 p list.size
+p list.head
+p list.tail
+
+p list.at(3)
