@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
+# LinkedList
 class LinkedList
-  # setup head ,remmember we traverse a linkedlist from the head
   attr_reader :head, :tail
   def initialize
     @head = nil
@@ -9,7 +9,6 @@ class LinkedList
   end
 
   def append(value)
-    # create a new node
     this_node = Node.new(value)
     if @head.nil?
       @head = @tail = this_node
@@ -20,7 +19,6 @@ class LinkedList
   end
 
   def prepend(value)
-    # create a new node
     this_node = Node.new(value)
     if @head.nil?
       @head = @tail = this_node
@@ -95,41 +93,48 @@ class LinkedList
 
   def insert_at(value, index)
     if @head.nil?
-      # if list is empty, the head is the new node
       this_node = Node.new(value)
       @head = this_node
     end
-    if index == 0
-      # if index is 0, we insert in the first position
+    if index.zero?
       this_node = Node.new(value, @head)
       @head = this_node
     end
-    if index > 0
-      # insert at desired position if index is greater than 0
-      ind = index - 1
-      current = @head
-      before_current = @head
+    return unless index.positive?
 
-      # loop to the desired position before where you wish to insert
-      ind.times do
-        before_current = current.next_node
-      end
-      # loop to the desired position where you wish to insert
-      index.times do
-        current = current.next_node
-      end
-      # create a new node you wish to insert
-      this_node = Node.new(value)
-      after_current = before_current.next_node
-      # point node before current to new node
-      before_current.next_node = this_node
-      # point new node to the old current node
-      this_node.next_node = after_current
+    current = @head
+    before_current = @head
 
+    (index - 1).times do
+      before_current = current.next_node
     end
+    index.times do
+      current = current.next_node
+    end
+    this_node = Node.new(value)
+    after_current = before_current.next_node
+    before_current.next_node = this_node
+    this_node.next_node = after_current
+  end
+
+  def remove_at(index)
+    current = @head
+    before_current = @head
+    @head = current.next_node if index.zero?
+    return unless index.positive?
+
+    (index - 1).times do
+      before_current = current.next_node
+    end
+    index.times do
+      current = current.next_node
+    end
+    before_current.next_node = current.next_node
+    current.value = nil
   end
 end
 
+# Node
 class Node
   attr_accessor :value, :next_node
 
@@ -138,12 +143,3 @@ class Node
     @next_node = next_node
   end
 end
-
-list = LinkedList.new
-
-list.append(10)
-list.append(25)
-list.append(40)
-list.to_s
-list.insert_at(12, 2)
-list.to_s
