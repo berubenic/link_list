@@ -92,6 +92,42 @@ class LinkedList
     end
     print "nil \n"
   end
+
+  def insert_at(value, index)
+    if @head.nil?
+      # if list is empty, the head is the new node
+      this_node = Node.new(value)
+      @head = this_node
+    end
+    if index == 0
+      # if index is 0, we insert in the first position
+      this_node = Node.new(value, @head)
+      @head = this_node
+    end
+    if index > 0
+      # insert at desired position if index is greater than 0
+      ind = index - 1
+      current = @head
+      before_current = @head
+
+      # loop to the desired position before where you wish to insert
+      ind.times do
+        before_current = current.next_node
+      end
+      # loop to the desired position where you wish to insert
+      index.times do
+        current = current.next_node
+      end
+      # create a new node you wish to insert
+      this_node = Node.new(value)
+      after_current = before_current.next_node
+      # point node before current to new node
+      before_current.next_node = this_node
+      # point new node to the old current node
+      this_node.next_node = after_current
+
+    end
+  end
 end
 
 class Node
@@ -105,22 +141,9 @@ end
 
 list = LinkedList.new
 
-p list
-
-p list.append(10)
-p list.append(20)
-
-p list.prepend(5)
-p list.prepend(16)
-
-p list.size
-p list.head
-p list.tail
-
-p list.at(3)
-
-p list.size
-
+list.append(10)
+list.append(25)
+list.append(40)
 list.to_s
-p list.contains?(22)
-p list.find(12)
+list.insert_at(12, 2)
+list.to_s
