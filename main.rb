@@ -22,12 +22,21 @@ class LinkedList
     # create a new node
     this_node = Node.new(value)
     if @head.nil?
+      @head = @tail = this_node
+    else
+      this_node.next_node = @head
       @head = this_node
-      return
     end
+  end
 
+  def size
+    count = 0
     current = @head
-    this_node.next_node = current
+    until current.nil?
+      current = current.next_node
+      count += 1
+    end
+    count
   end
 end
 
@@ -46,3 +55,10 @@ p list
 
 p list.append(10)
 p list.append(20)
+
+p list.prepend(5)
+p list.prepend(16)
+
+p list
+
+p list.size
